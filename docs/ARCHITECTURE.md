@@ -1,6 +1,6 @@
-# Tailwind Lite Architecture Documentation
+# Tailwind Architecture Documentation
 
-This document provides a comprehensive overview of the Tailwind Lite mobile application architecture.
+This document provides a comprehensive overview of the Tailwind mobile application architecture.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ This document provides a comprehensive overview of the Tailwind Lite mobile appl
 
 ## Overview
 
-Tailwind Lite is built using a modern React Native architecture with the following key principles:
+Tailwind is built using a modern React Native architecture with the following key principles:
 
 - **Component-Based**: Modular, reusable UI components
 - **Type-Safe**: Full TypeScript coverage for reliability

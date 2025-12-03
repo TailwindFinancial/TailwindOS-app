@@ -1,16 +1,16 @@
-# Tailwind Lite Mobile App
+# Tailwind Mobile App - Beta 1.0.0
 
-A modern, beautifully designed mobile application for group expense tracking and splitting built with React Native and Expo.
+A mobile application for group expense tracking and splitting built with React Native and Expo.
 
 ## Overview
 
-Tailwind Lite is a mobile expense splitting application that makes it easy for groups to track shared expenses, split bills, and settle up. The app features OCR receipt scanning, multi-currency support, social features like "Trip Wrapped," and seamless payment integrations.
+Tailwind is a mobile expense splitting application that makes it easy for groups to track shared expenses, split bills, and settle up. The app features OCR receipt scanning, multi-currency support, social features like "Trip Wrapped," and seamless payment integrations.
 
 ## Features
 
 ### Core Functionality
 - **Expense Tracking**: Add and track expenses within group "pots"
-- **Smart Splitting**: Automatically split expenses among group members
+- **Bill Splitting**: Automatically split expenses among group members
 - **Receipt Scanning**: OCR-powered receipt scanning for quick expense entry
 - **Multi-Currency**: Real-time currency conversion for international groups
 - **Balance Tracking**: See who owes what at a glance
@@ -18,7 +18,7 @@ Tailwind Lite is a mobile expense splitting application that makes it easy for g
 ### Social & Viral Features
 - **Trip Wrapped**: Instagram-style recap of group expenses
 - **Freeloader Leaderboard**: Gamified balance tracking
-- **Receipt Roast**: AI-generated commentary on expenses
+- **Receipt Roast**: Witty commentary on expenses
 
 ### Integrations
 - **Payment Deep Links**: Direct integration with Venmo, Cash App, and Interac
@@ -36,7 +36,7 @@ Tailwind Lite is a mobile expense splitting application that makes it easy for g
 - **React Native Reanimated**: Smooth animations
 
 ### Design System
-- **Colors**: Ultra-premium dark theme with cyan accents
+- **Colors**: Dark theme with cyan accents
 - **Typography**: Fraunces for headlines, Inter for body text
 - **Components**: Fully documented, reusable design system
 
@@ -114,7 +114,7 @@ tailwindOS-app/
 
 ### Prerequisites
 
-- **Node.js**: v18+ recommended
+- **Node.js**: Latest version
 - **npm** or **yarn**: Latest version
 - **Expo CLI**: Install globally with `npm install -g expo-cli`
 - **iOS Simulator** (Mac only) or **Android Studio** (for Android development)
@@ -346,9 +346,9 @@ For questions or support, contact the Tailwind team.
 ## Roadmap
 
 ### Phase 1: MVP (Current)
-- [x] Design system components
-- [x] Authentication flow
-- [x] Navigation structure
+- [] Design system components
+- [] Authentication flow
+- [] Navigation structure
 - [ ] Pot management
 - [ ] Expense tracking
 
