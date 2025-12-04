@@ -20,26 +20,31 @@ import { Ionicons } from '@expo/vector-icons';
 export const MessagesScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Typography variant="h1" color="text">
-          Messages
-        </Typography>
-        <Typography variant="body" color="secondary" style={styles.subtitle}>
-          Activity & Notifications
-        </Typography>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top Safe Area Padding */}
+        <View style={styles.topPadding} />
+        
+        {/* Header */}
+        <View style={styles.header}>
+          <Typography variant="h1" color="text">
+            Messages
+          </Typography>
+          <Typography variant="body" color="secondary" style={styles.subtitle}>
+            Chats & notifications
+          </Typography>
+        </View>
       
-      {/* Empty State */}
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.emptyState}>
-          <Ionicons name="chatbubbles-outline" size={64} color={colors.textTertiary} />
-          <Typography variant="h3" color="secondary" align="center" style={styles.emptyTitle}>
-            No Messages Yet
-          </Typography>
-          <Typography variant="body" color="tertiary" align="center" style={styles.emptyText}>
-            Activity and expense notifications will appear here
-          </Typography>
+        {/* Empty State */}
+        <View style={styles.content}>
+          <View style={styles.emptyState}>
+            <Ionicons name="chatbubbles-outline" size={64} color={colors.textTertiary} />
+            <Typography variant="h3" color="secondary" align="center" style={styles.emptyTitle}>
+              No Messages Yet
+            </Typography>
+            <Typography variant="body" color="tertiary" align="center" style={styles.emptyText}>
+              Group chats and DMs will appear here
+            </Typography>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -56,12 +61,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   
+  /** Top padding */
+  topPadding: {
+    height: 60,
+  },
+  
   /** Header section */
   header: {
-    padding: spacing.lg,
-    paddingTop: spacing.xl,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
   },
   
   /** Subtitle */

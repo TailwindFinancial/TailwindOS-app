@@ -116,20 +116,8 @@ export const MainTabNavigator: React.FC = () => {
       <Tab.Navigator
         // Screen options applied to all tabs
         screenOptions={{
-          // Header styling - clean and modern
-          headerStyle: {
-            backgroundColor: colors.background,
-            elevation: 0,
-            shadowOpacity: 0,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.border,
-          },
-          headerTintColor: colors.text,
-          headerTitleStyle: {
-            fontFamily: 'Fraunces_600SemiBold',
-            fontSize: 28,
-            color: colors.text,
-          },
+          // Hide headers - each screen handles its own title inline
+          headerShown: false,
           
           // Tab bar styling - executive and modern
           tabBarStyle: {
@@ -153,7 +141,6 @@ export const MainTabNavigator: React.FC = () => {
           tabBarIconStyle: {
             marginTop: 4,
           },
-          headerShown: true,
         }}
       >
         {/* Home Tab */}

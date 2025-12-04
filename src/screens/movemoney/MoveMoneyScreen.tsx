@@ -91,17 +91,17 @@ export const MoveMoneyScreen: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      {/* Top padding */}
-      <View style={styles.headerSpacer} />
-      
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top Safe Area Padding */}
+        <View style={styles.topPadding} />
+        
         {/* Header */}
         <View style={styles.header}>
           <Typography variant="h1" color="text">
-            Settle Up
+            Settle
           </Typography>
           <Typography variant="body" color="secondary" style={styles.subtitle}>
-            Manage payments and transfers
+            Payments & transfers
           </Typography>
         </View>
         
@@ -236,8 +236,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerSpacer: {
-    height: spacing.base,
+  topPadding: {
+    height: 60,
   },
   header: {
     paddingHorizontal: spacing.lg,

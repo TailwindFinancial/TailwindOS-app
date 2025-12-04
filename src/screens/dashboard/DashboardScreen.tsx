@@ -108,16 +108,16 @@ export const DashboardScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Top padding under header */}
-        <View style={styles.headerSpacer} />
+        {/* Top Safe Area Padding */}
+        <View style={styles.topPadding} />
         
-        {/* Greeting */}
-        <View style={styles.greeting}>
-          <Typography variant="body" color="secondary">
-            Good morning,
+        {/* Title & Greeting */}
+        <View style={styles.headerSection}>
+          <Typography variant="h1" color="text">
+            Home
           </Typography>
-          <Typography variant="display" color="text" style={styles.userName}>
-            {user?.name?.split(' ')[0]}
+          <Typography variant="body" color="secondary" style={styles.greeting}>
+            Good morning, {user?.name?.split(' ')[0]}
           </Typography>
         </View>
         
@@ -369,15 +369,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerSpacer: {
-    height: spacing.base,
+  topPadding: {
+    height: 60,
   },
-  greeting: {
+  headerSection: {
     paddingHorizontal: spacing.lg,
     marginBottom: spacing.lg,
   },
-  userName: {
-    marginTop: 4,
+  greeting: {
+    marginTop: spacing.xs,
   },
   heroSection: {
     paddingHorizontal: spacing.lg,

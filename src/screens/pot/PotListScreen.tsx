@@ -141,10 +141,10 @@ export const PotListScreen: React.FC<any> = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
-      {/* Top padding */}
-      <View style={styles.headerSpacer} />
-      
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top Safe Area Padding */}
+        <View style={styles.topPadding} />
+        
         {/* Header */}
         <View style={styles.header}>
           <View>
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerSpacer: {
-    height: spacing.base,
+  topPadding: {
+    height: 60,
   },
   header: {
     flexDirection: 'row',

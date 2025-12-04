@@ -92,9 +92,19 @@ export const MoreScreen: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {/* Header with User Info */}
-        <View style={styles.header}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top Safe Area Padding */}
+        <View style={styles.topPadding} />
+        
+        {/* Header - Inline Title */}
+        <View style={styles.titleSection}>
+          <Typography variant="h1" color="text">
+            More
+          </Typography>
+        </View>
+        
+        {/* User Info Card */}
+        <View style={styles.userSection}>
           <View style={styles.userInfo}>
             {/* User Avatar */}
             <View style={styles.avatar}>
@@ -164,6 +174,21 @@ export const MoreScreen: React.FC = () => {
           />
         </View>
         
+        {/* Communication Section */}
+        <View style={styles.section}>
+          <Typography variant="label" color="tertiary" style={styles.sectionTitle}>
+            COMMUNICATION
+          </Typography>
+          
+          <MenuItem
+            icon="chatbubbles-outline"
+            title="Messages"
+            subtitle="Chat with friends and trip groups"
+            onPress={() => {}}
+            iconColor="#3498DB"
+          />
+        </View>
+        
         {/* Support Section */}
         <View style={styles.section}>
           <Typography variant="label" color="tertiary" style={styles.sectionTitle}>
@@ -226,12 +251,8 @@ export const MoreScreen: React.FC = () => {
           </Pressable>
         </View>
         
-        {/* App Version */}
-        <View style={styles.footer}>
-          <Typography variant="caption" color="tertiary" align="center">
-            Tailwind v1.0.0
-          </Typography>
-        </View>
+        {/* Bottom spacer */}
+        <View style={styles.bottomSpacer} />
       </ScrollView>
       
       {/* Custom Logout Alert */}
@@ -259,10 +280,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   
-  /** Header with user info */
-  header: {
-    padding: spacing.lg,
-    paddingTop: spacing.xl,
+  /** Top padding */
+  topPadding: {
+    height: 60,
+  },
+  
+  /** Title section */
+  titleSection: {
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  
+  /** User section */
+  userSection: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
@@ -357,10 +389,9 @@ const styles = StyleSheet.create({
     marginLeft: spacing.sm,
   },
   
-  /** Footer */
-  footer: {
-    padding: spacing.xl,
-    paddingBottom: spacing.xxxl,
+  /** Bottom spacer */
+  bottomSpacer: {
+    height: 120,
   },
 });
 
