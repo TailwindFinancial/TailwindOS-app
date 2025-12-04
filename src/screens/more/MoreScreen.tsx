@@ -92,7 +92,17 @@ export const MoreScreen: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top safe area */}
+        <View style={styles.topSafeArea} />
+        
+        {/* Page Title */}
+        <View style={styles.pageHeader}>
+          <Typography variant="h1" color="text">
+            More
+          </Typography>
+        </View>
+        
         {/* Header with User Info */}
         <View style={styles.header}>
           <View style={styles.userInfo}>
