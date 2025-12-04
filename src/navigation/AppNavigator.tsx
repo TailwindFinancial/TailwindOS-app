@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoadingSpinner } from '@components/design-system';
 import { useAuthStore } from '@store/authStore';
@@ -50,7 +50,12 @@ export const AppNavigator: React.FC = () => {
    */
   useEffect(() => {
     // Load authentication state from storage
-    loadAuth();
+    // Wrap in try-catch to prevent unhandled promise rejections
+    loadAuth().catch((error) => {
+      console.error('Failed to load auth in AppNavigator:', error);
+      // Ensure loading state is cleared even on error
+      useAuthStore.getState().setLoading(false);
+    });
   }, []); // Empty dependency array = run once on mount
   
   /**
@@ -68,23 +73,32 @@ export const AppNavigator: React.FC = () => {
   }
   
   /**
+   * Build a navigation theme that extends React Navigation's default dark theme.
+   * We must spread the original object so required properties (fonts, animation helpers, etc.)
+   * remain defined. Overriding the entire theme object causes undefined fonts and triggers the
+   * "Cannot read property 'regular' of undefined" runtime error inside the header config.
+   */
+  const navigationTheme = {
+    ...NavigationDarkTheme,
+    colors: {
+      ...NavigationDarkTheme.colors,
+      primary: colors.primary,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.text,
+      border: colors.border,
+      notification: colors.primary,
+    },
+  };
+
+  /**
    * Render navigation
    * NavigationContainer manages navigation state and provides context
    */
   return (
     <NavigationContainer
-      // Dark theme for navigation
-      theme={{
-        dark: true,
-        colors: {
-          primary: colors.primary,           // Primary cyan color
-          background: colors.background,     // Black background
-          card: colors.surface,              // Dark surface for cards/headers
-          text: colors.text,                 // White text
-          border: colors.border,             // Subtle borders
-          notification: colors.primary,      // Notification badge color
-        },
-      }}
+      // Dark theme for navigation with preserved font definitions
+      theme={navigationTheme}
     >
       <Stack.Navigator
         // Screen options for root navigator

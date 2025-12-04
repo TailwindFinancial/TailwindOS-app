@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typography, Button, Input } from '@components/design-system';
 import { AuthStackParamList } from '@types';
@@ -77,8 +77,14 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navi
   // Success view
   if (isSuccess) {
     return (
-      <View style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.content}>
+        {/* Brand logo for visual consistency */}
+        <Image
+          source={require('../../../assets/transparant-bg-logo.png')} // Logo asset
+          style={styles.logo}                                       // Sized for dialog
+          resizeMode="contain"                                      // Maintain aspect ratio
+        />
           <Typography variant="h1" color="success" align="center">
             Check Your Email
           </Typography>
@@ -103,6 +109,12 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navi
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+        {/* Brand logo */}
+        <Image
+          source={require('../../../assets/transparant-bg-logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
         <Typography variant="h1" color="primary" align="center">
           Reset Password
         </Typography>
@@ -157,6 +169,13 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
+  },
+  /** Logo styling */
+  logo: {
+    width: 120,                 // Fixed size for both states
+    height: 120,                // Square proportions
+    alignSelf: 'center',        // Center horizontally
+    marginBottom: spacing.lg,   // Space below logo
   },
   message: {
     marginTop: spacing.base,

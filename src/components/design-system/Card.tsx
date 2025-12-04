@@ -360,3 +360,4 @@ const paddingStyles = StyleSheet.create({
  */
 export default Card;
 
+

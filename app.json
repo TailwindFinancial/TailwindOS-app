@@ -4,10 +4,10 @@
     "slug": "tailwindos-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/app-icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/transparant-bg-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -20,13 +20,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/app-icon.png",
         "backgroundColor": "#000000"
       },
       "package": "com.tailwind.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icons/app-icon.png"
     }
   }
 }

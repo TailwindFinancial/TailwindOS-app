@@ -20,6 +20,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { Typography } from './src/components/design-system';
+import { ErrorBoundary } from './src/components/ErrorBoundary';
 
 // Keep the splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
@@ -84,15 +85,17 @@ export default function App(): React.ReactElement | null {
 
   // Fonts are loaded successfully, render the app
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      {/* StatusBar controls the system status bar appearance */}
-      {/* 'light' style shows white text on dark background */}
-      <StatusBar style="light" />
-      
-      {/* App Navigator - Main navigation structure */}
-      {/* Handles auth flow and main app navigation */}
-      <AppNavigator />
-    </View>
+    <ErrorBoundary>
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        {/* StatusBar controls the system status bar appearance */}
+        {/* 'light' style shows white text on dark background */}
+        <StatusBar style="light" />
+        
+        {/* App Navigator - Main navigation structure */}
+        {/* Handles auth flow and main app navigation */}
+        <AppNavigator />
+      </View>
+    </ErrorBoundary>
   );
 }
 

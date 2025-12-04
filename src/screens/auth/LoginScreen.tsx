@@ -17,11 +17,12 @@
 
 import React, { useState } from 'react';
 import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  View,                       // Container view
+  StyleSheet,                 // Styling helper
+  KeyboardAvoidingView,       // Moves content above keyboard
+  Platform,                   // Detect platform
+  ScrollView,                 // Allows scrolling on smaller screens
+  Image,                      // Displays the Tailwind logo asset
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typography, Button, Input } from '@components/design-system';
@@ -165,6 +166,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       >
         {/* Header */}
         <View style={styles.header}>
+          {/* Brand logo - replaces previous placeholder text-only header */}
+          <Image
+            source={require('../../../assets/transparant-bg-logo.png')} // Transparent logo asset
+            style={styles.logo}                                        // Scales logo consistently
+            resizeMode="contain"                                       // Preserve aspect ratio
+          />
           <Typography variant="display" color="primary" align="center">
             Tailwind
           </Typography>
@@ -275,6 +282,12 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: spacing.xxl,
     alignItems: 'center',
+  },
+  /** Logo image styling */
+  logo: {
+    width: 140,                 // Fixed width for consistency
+    height: 140,                // Matches width for square logo
+    marginBottom: spacing.base, // Space between logo and headline
   },
   
   /** Subtitle text */

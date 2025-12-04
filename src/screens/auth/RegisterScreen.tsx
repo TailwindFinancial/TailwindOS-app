@@ -9,11 +9,12 @@
 
 import React, { useState } from 'react';
 import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  View,                       // Container
+  StyleSheet,                 // Styling helper
+  KeyboardAvoidingView,       // Moves form above keyboard
+  Platform,                   // Platform detection
+  ScrollView,                 // Allows scrolling
+  Image,                      // Displays Tailwind logo
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typography, Button, Input } from '@components/design-system';
@@ -141,6 +142,12 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
       >
         {/* Header */}
         <View style={styles.header}>
+          {/* Brand logo for consistent onboarding visuals */}
+          <Image
+            source={require('../../../assets/transparant-bg-logo.png')} // Transparent background logo
+            style={styles.logo}                                       // Consistent sizing
+            resizeMode="contain"                                      // Preserve aspect ratio
+          />
           <Typography variant="h1" color="primary" align="center">
             Create Account
           </Typography>
@@ -252,6 +259,12 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: spacing.xl,
     alignItems: 'center',
+  },
+  /** Logo styling for register header */
+  logo: {
+    width: 120,                 // Slightly smaller to fit layout
+    height: 120,                // Square image
+    marginBottom: spacing.base, // Space between logo and title
   },
   subtitle: {
     marginTop: spacing.sm,
