@@ -321,18 +321,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         STORAGE_KEYS.TOKEN,
       ]);
       
-      // Extract values with safe parsing
-      let user = null;
-      if (userJson[1]) {
-        try {
-          user = JSON.parse(userJson[1]);
-        } catch (parseError) {
-          console.error('Failed to parse user data:', parseError);
-          // Clear corrupted user data
-          await AsyncStorage.removeItem(STORAGE_KEYS.USER);
-        }
-      }
-      
+      // Extract values
+      const user = userJson[1] ? JSON.parse(userJson[1]) : null;
       const storedToken = token[1];
       
       // If both user and token exist, restore session
@@ -353,13 +343,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       console.error('Failed to load auth state:', error);
       
       // Clear potentially corrupted data
-      try {
-        await AsyncStorage.multiRemove([STORAGE_KEYS.USER, STORAGE_KEYS.TOKEN]);
-      } catch (clearError) {
-        console.error('Failed to clear corrupted auth data:', clearError);
-      }
+      await AsyncStorage.multiRemove([STORAGE_KEYS.USER, STORAGE_KEYS.TOKEN]);
       
-      // Always set loading to false, even on error
       set({ isLoading: false });
     }
   },

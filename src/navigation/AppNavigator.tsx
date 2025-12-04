@@ -50,12 +50,7 @@ export const AppNavigator: React.FC = () => {
    */
   useEffect(() => {
     // Load authentication state from storage
-    // Wrap in try-catch to prevent unhandled promise rejections
-    loadAuth().catch((error) => {
-      console.error('Failed to load auth in AppNavigator:', error);
-      // Ensure loading state is cleared even on error
-      useAuthStore.getState().setLoading(false);
-    });
+    loadAuth();
   }, []); // Empty dependency array = run once on mount
   
   /**

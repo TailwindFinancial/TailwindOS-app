@@ -13,14 +13,13 @@
  * @module App
  */
 
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { Typography } from './src/components/design-system';
-import { ErrorBoundary } from './src/components/ErrorBoundary';
 
 // Keep the splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
@@ -56,15 +55,26 @@ export default function App(): React.ReactElement | null {
 
   /**
    * Hide splash screen once fonts are loaded
-   * Uses useCallback to memoize the function and prevent unnecessary re-renders
+   * Runs immediately when fonts finish loading (not waiting for layout)
    */
-  const onLayoutRootView = useCallback(async () => {
-    // Only hide splash screen if fonts are loaded or there's an error
-    if (fontsLoaded || fontError) {
-      // Hide the splash screen asynchronously
-      await SplashScreen.hideAsync();
+  useEffect(() => {
+    // Function to hide splash screen
+    async function hideSplash() {
+      // Only proceed if fonts are loaded or there's an error
+      if (fontsLoaded || fontError) {
+        try {
+          // Hide the splash screen asynchronously
+          await SplashScreen.hideAsync();
+        } catch (error) {
+          // Splash already hidden or other error - ignore
+          console.warn('Error hiding splash:', error);
+        }
+      }
     }
-  }, [fontsLoaded, fontError]);
+    
+    // Call the hide function
+    hideSplash();
+  }, [fontsLoaded, fontError]); // Re-run when fonts load or error occurs
 
   // If fonts are not yet loaded and there's no error, return null
   // This keeps the splash screen visible
@@ -85,17 +95,15 @@ export default function App(): React.ReactElement | null {
 
   // Fonts are loaded successfully, render the app
   return (
-    <ErrorBoundary>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        {/* StatusBar controls the system status bar appearance */}
-        {/* 'light' style shows white text on dark background */}
-        <StatusBar style="light" />
-        
-        {/* App Navigator - Main navigation structure */}
-        {/* Handles auth flow and main app navigation */}
-        <AppNavigator />
-      </View>
-    </ErrorBoundary>
+    <View style={styles.container}>
+      {/* StatusBar controls the system status bar appearance */}
+      {/* 'light' style shows white text on dark background */}
+      <StatusBar style="light" />
+      
+      {/* App Navigator - Main navigation structure */}
+      {/* Handles auth flow and main app navigation */}
+      <AppNavigator />
+    </View>
   );
 }
 
