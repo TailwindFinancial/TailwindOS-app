@@ -17,17 +17,6 @@ import React, { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
-import {
-  Fraunces_400Regular,
-  Fraunces_600SemiBold,
-  Fraunces_700Bold,
-} from '@expo-google-fonts/fraunces';
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-} from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { Typography } from './src/components/design-system';
@@ -45,19 +34,23 @@ SplashScreen.preventAutoHideAsync();
  * @returns {React.ReactElement | null} The root app component or null while loading
  */
 export default function App(): React.ReactElement | null {
-  // Load all required font variants using Expo Google Fonts
+  // Load all required font variants from local TTF files
+  // Using static fonts for specific weights we need (better performance than variable fonts)
   // This hook returns loading state and any errors
   const [fontsLoaded, fontError] = useFonts({
     // Fraunces font family (for headlines and display text)
-    Fraunces_400Regular,    // Regular weight (400)
-    Fraunces_600SemiBold,   // Semibold weight (600)
-    Fraunces_700Bold,       // Bold weight (700)
+    // Using 72pt static fonts from assets/fonts/Fraunces/static/
+    'Fraunces_400Regular': require('./assets/fonts/Fraunces/static/Fraunces_72pt-Regular.ttf'),
+    'Fraunces_600SemiBold': require('./assets/fonts/Fraunces/static/Fraunces_72pt-SemiBold.ttf'),
+    'Fraunces_700Bold': require('./assets/fonts/Fraunces/static/Fraunces_72pt-Bold.ttf'),
     
     // Inter font family (for body text and UI)
-    Inter_400Regular,       // Regular weight (400)
-    Inter_500Medium,        // Medium weight (500)
-    Inter_600SemiBold,      // Semibold weight (600)
-    Inter_700Bold,          // Bold weight (700)
+    // Using 18pt static fonts from assets/fonts/Inter/static/
+    // 18pt is optimal for mobile UI (not too large, not too small)
+    'Inter_400Regular': require('./assets/fonts/Inter/static/Inter_18pt-Regular.ttf'),
+    'Inter_500Medium': require('./assets/fonts/Inter/static/Inter_18pt-Medium.ttf'),
+    'Inter_600SemiBold': require('./assets/fonts/Inter/static/Inter_18pt-SemiBold.ttf'),
+    'Inter_700Bold': require('./assets/fonts/Inter/static/Inter_18pt-Bold.ttf'),
   });
 
   /**
