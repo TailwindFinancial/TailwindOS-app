@@ -567,23 +567,20 @@ export type PotStackParamList = {
  * Defines the main bottom tab screens
  */
 export type MainTabParamList = {
-  /** Dashboard/home screen (no params) */
-  Dashboard: undefined;
+  /** Home/Dashboard screen (no params) */
+  Home: undefined;
   
-  /** Pot navigator (nested stack) */
-  Pots: undefined;
+  /** Trips (Pots) navigator (nested stack) */
+  Trips: undefined;
   
-  /** Add expense screen */
-  AddExpense: {
-    /** Optional: Pre-select pot */
-    potId?: string;
-  };
+  /** Messages/Activity feed screen (no params) */
+  Messages: undefined;
   
-  /** Activity feed screen (no params) */
-  Activity: undefined;
+  /** Move Money/Settle up screen (no params) */
+  MoveMoney: undefined;
   
-  /** User profile screen (no params) */
-  Profile: undefined;
+  /** More/Settings screen (no params) */
+  More: undefined;
 };
 
 /**

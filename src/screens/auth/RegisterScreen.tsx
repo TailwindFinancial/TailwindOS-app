@@ -1,90 +1,66 @@
 /**
- * Register Screen - New User Registration
+ * Register Screen - Modern Account Creation
  * 
- * This screen handles new user account creation.
- * Collects name, email, and password for registration.
+ * Clean, executive registration flow.
  * 
  * @module Screens/Auth/Register
  */
 
 import React, { useState } from 'react';
 import {
-  View,                       // Container
-  StyleSheet,                 // Styling helper
-  KeyboardAvoidingView,       // Moves form above keyboard
-  Platform,                   // Platform detection
-  ScrollView,                 // Allows scrolling
-  Image,                      // Displays Tailwind logo
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Pressable,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Typography, Button, Input } from '@components/design-system';
+import { Typography, Button, Input, Card } from '@components/design-system';
 import { useAuthStore } from '@store/authStore';
 import { AuthStackParamList } from '@types';
-import { colors, spacing } from '@constants/theme';
+import { colors, spacing, borderRadius } from '@constants/theme';
+import { Ionicons } from '@expo/vector-icons';
 
-/**
- * Register Screen Props
- */
 type RegisterScreenProps = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
-/**
- * Register Screen Component
- * 
- * @param {RegisterScreenProps} props - Navigation props
- * @returns {React.ReactElement} Register screen UI
- */
 export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
-  // Local state for form inputs
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
-  // Validation errors
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   
-  // Auth store
   const { register, isLoading, error } = useAuthStore();
   
-  /**
-   * Validate email format
-   */
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
   
-  /**
-   * Validate form
-   */
   const validateForm = (): boolean => {
     let isValid = true;
-    
-    // Clear errors
     setNameError('');
     setEmailError('');
     setPasswordError('');
     setConfirmPasswordError('');
     
-    // Validate name
     if (!name.trim()) {
       setNameError('Name is required');
       isValid = false;
     }
     
-    // Validate email
     if (!email.trim()) {
       setEmailError('Email is required');
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError('Invalid email address');
       isValid = false;
     }
     
-    // Validate password
     if (!password) {
       setPasswordError('Password is required');
       isValid = false;
@@ -93,9 +69,8 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
       isValid = false;
     }
     
-    // Validate confirm password
     if (!confirmPassword) {
-      setConfirmPasswordError('Please confirm your password');
+      setConfirmPasswordError('Please confirm password');
       isValid = false;
     } else if (password !== confirmPassword) {
       setConfirmPasswordError('Passwords do not match');
@@ -105,30 +80,14 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
     return isValid;
   };
   
-  /**
-   * Handle registration
-   */
   const handleRegister = async () => {
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
     
     try {
-      await register({
-        name: name.trim(),
-        email: email.trim(),
-        password,
-      });
+      await register({ name: name.trim(), email: email.trim(), password });
     } catch (error) {
       // Error handled by store
     }
-  };
-  
-  /**
-   * Navigate back to login
-   */
-  const handleBackToLogin = () => {
-    navigation.navigate('Login');
   };
   
   return (
@@ -139,26 +98,20 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
         {/* Header */}
         <View style={styles.header}>
-          {/* Brand logo for consistent onboarding visuals */}
-          <Image
-            source={require('../../../assets/transparant-bg-logo.png')} // Transparent background logo
-            style={styles.logo}                                       // Consistent sizing
-            resizeMode="contain"                                      // Preserve aspect ratio
-          />
-          <Typography variant="h1" color="primary" align="center">
+          <Typography variant="display" color="text">
             Create Account
           </Typography>
-          <Typography variant="body" color="secondary" align="center" style={styles.subtitle}>
-            Join Tailwind and start tracking expenses
+          <Typography variant="body" color="secondary" style={styles.subtitle}>
+            Join Tailwind and manage expenses with friends
           </Typography>
         </View>
         
         {/* Registration Form */}
-        <View style={styles.form}>
-          {/* Name Input */}
+        <Card glass={false} elevation="flat" padding="lg" style={styles.formCard}>
           <Input
             label="Full Name"
             placeholder="John Doe"
@@ -166,24 +119,18 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
             onChangeText={setName}
             error={nameError}
             autoCapitalize="words"
-            textContentType="name"
           />
           
-          {/* Email Input */}
           <Input
-            label="Email"
+            label="Email Address"
             type="email"
-            placeholder="your@email.com"
+            placeholder="you@example.com"
             value={email}
             onChangeText={setEmail}
             error={emailError}
             autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="email-address"
-            textContentType="emailAddress"
           />
           
-          {/* Password Input */}
           <Input
             label="Password"
             type="password"
@@ -192,10 +139,8 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
             onChangeText={setPassword}
             error={passwordError}
             autoCapitalize="none"
-            textContentType="newPassword"
           />
           
-          {/* Confirm Password Input */}
           <Input
             label="Confirm Password"
             type="password"
@@ -204,48 +149,44 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) =>
             onChangeText={setConfirmPassword}
             error={confirmPasswordError}
             autoCapitalize="none"
-            textContentType="newPassword"
           />
           
-          {/* Store Error */}
           {error && (
-            <Typography variant="bodySmall" color="error" style={styles.errorText}>
-              {error}
-            </Typography>
+            <View style={styles.errorAlert}>
+              <Ionicons name="alert-circle" size={18} color={colors.error} />
+              <Typography variant="bodySmall" color="error" style={styles.errorText}>
+                {error}
+              </Typography>
+            </View>
           )}
           
-          {/* Register Button */}
           <Button
             variant="primary"
             size="lg"
             fullWidth
             loading={isLoading}
             onPress={handleRegister}
-            style={styles.registerButton}
           >
-            Sign Up
+            Create Account
           </Button>
-          
-          {/* Login Link */}
-          <View style={styles.loginContainer}>
-            <Typography variant="body" color="secondary">
-              Already have an account?{' '}
+        </Card>
+        
+        {/* Login Prompt */}
+        <View style={styles.loginPrompt}>
+          <Typography variant="body" color="secondary">
+            Already have an account?
+          </Typography>
+          <Pressable onPress={() => navigation.navigate('Login')}>
+            <Typography variant="label" color="primary" style={styles.loginLink}>
+              Sign in
             </Typography>
-            <Button variant="secondary" size="sm" onPress={handleBackToLogin}>
-              <Typography variant="body" color="primary">
-                Log In
-              </Typography>
-            </Button>
-          </View>
+          </Pressable>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
 
-/**
- * Styles
- */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -254,37 +195,44 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: spacing.lg,
+    padding: spacing.xl,
+    paddingTop: spacing.xxxl,
   },
   header: {
-    marginBottom: spacing.xl,
-    alignItems: 'center',
-  },
-  /** Logo styling for register header */
-  logo: {
-    width: 120,                 // Slightly smaller to fit layout
-    height: 120,                // Square image
-    marginBottom: spacing.base, // Space between logo and title
+    marginBottom: spacing.xxl,
   },
   subtitle: {
     marginTop: spacing.sm,
   },
-  form: {
-    width: '100%',
+  formCard: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    marginBottom: spacing.lg,
+  },
+  errorAlert: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.error + '10',
+    padding: spacing.base,
+    borderRadius: borderRadius.md,
+    marginBottom: spacing.base,
+    borderWidth: 1,
+    borderColor: colors.error + '30',
   },
   errorText: {
-    marginBottom: spacing.base,
+    marginLeft: spacing.sm,
+    flex: 1,
   },
-  registerButton: {
-    marginBottom: spacing.base,
-  },
-  loginContainer: {
+  loginPrompt: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: spacing.base,
+    justifyContent: 'center',
+    gap: spacing.sm,
+  },
+  loginLink: {
+    textDecorationLine: 'underline',
   },
 });
 
 export default RegisterScreen;
-

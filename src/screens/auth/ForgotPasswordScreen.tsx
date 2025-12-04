@@ -1,190 +1,176 @@
 /**
  * Forgot Password Screen - Password Reset
  * 
- * This screen handles password reset requests.
- * User enters email and receives reset instructions.
+ * Modern, executive password reset flow.
  * 
  * @module Screens/Auth/ForgotPassword
  */
 
 import React, { useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Typography, Button, Input } from '@components/design-system';
+import { Typography, Button, Input, Card } from '@components/design-system';
 import { AuthStackParamList } from '@types';
-import { colors, spacing } from '@constants/theme';
+import { colors, spacing, borderRadius } from '@constants/theme';
+import { Ionicons } from '@expo/vector-icons';
 
-/**
- * Forgot Password Screen Props
- */
 type ForgotPasswordScreenProps = NativeStackScreenProps<AuthStackParamList, 'ForgotPassword'>;
 
-/**
- * Forgot Password Screen Component
- * 
- * @param {ForgotPasswordScreenProps} props - Navigation props
- * @returns {React.ReactElement} Forgot password screen UI
- */
 export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation }) => {
-  // Local state
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   
-  /**
-   * Validate email
-   */
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
   
-  /**
-   * Handle password reset request
-   */
   const handleResetPassword = async () => {
-    // Clear error
     setEmailError('');
     
-    // Validate email
     if (!email.trim()) {
       setEmailError('Email is required');
       return;
     }
     
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError('Invalid email address');
       return;
     }
     
-    // Simulate API call
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsLoading(false);
-    
-    // Show success message
     setIsSuccess(true);
   };
   
-  /**
-   * Navigate back to login
-   */
-  const handleBackToLogin = () => {
-    navigation.navigate('Login');
-  };
-  
-  // Success view
   if (isSuccess) {
     return (
-    <View style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.content}>
-        {/* Brand logo for visual consistency */}
-        <Image
-          source={require('../../../assets/transparant-bg-logo.png')} // Logo asset
-          style={styles.logo}                                       // Sized for dialog
-          resizeMode="contain"                                      // Maintain aspect ratio
-        />
-          <Typography variant="h1" color="success" align="center">
+          <View style={styles.successIcon}>
+            <Ionicons name="checkmark-circle" size={80} color={colors.success} />
+          </View>
+          <Typography variant="h1" color="text" align="center" style={styles.successTitle}>
             Check Your Email
           </Typography>
-          <Typography variant="body" color="secondary" align="center" style={styles.message}>
-            We've sent password reset instructions to {email}
+          <Typography variant="body" color="secondary" align="center" style={styles.successText}>
+            We sent password reset instructions to
+          </Typography>
+          <Typography variant="label" color="text" align="center" style={styles.email}>
+            {email}
           </Typography>
           <Button
             variant="primary"
             size="lg"
             fullWidth
-            onPress={handleBackToLogin}
-            style={styles.button}
+            onPress={() => navigation.navigate('Login')}
+            style={styles.backButton}
           >
-            Back to Login
+            Back to Sign In
           </Button>
         </View>
       </View>
     );
   }
   
-  // Reset form view
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* Brand logo */}
-        <Image
-          source={require('../../../assets/transparant-bg-logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Typography variant="h1" color="primary" align="center">
-          Reset Password
-        </Typography>
-        <Typography variant="body" color="secondary" align="center" style={styles.message}>
-          Enter your email and we'll send you instructions to reset your password
-        </Typography>
+        {/* Header */}
+        <View style={styles.header}>
+          <Typography variant="display" color="text">
+            Reset Password
+          </Typography>
+          <Typography variant="body" color="secondary" style={styles.subtitle}>
+            Enter your email to receive reset instructions
+          </Typography>
+        </View>
         
-        {/* Email Input */}
-        <Input
-          label="Email"
-          type="email"
-          placeholder="your@email.com"
-          value={email}
-          onChangeText={setEmail}
-          error={emailError}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-        
-        {/* Reset Button */}
-        <Button
-          variant="primary"
-          size="lg"
-          fullWidth
-          loading={isLoading}
-          onPress={handleResetPassword}
-          style={styles.button}
-        >
-          Send Reset Link
-        </Button>
+        {/* Form */}
+        <Card glass={false} elevation="flat" padding="lg" style={styles.formCard}>
+          <Input
+            label="Email Address"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChangeText={setEmail}
+            error={emailError}
+            autoCapitalize="none"
+          />
+          
+          <Button
+            variant="primary"
+            size="lg"
+            fullWidth
+            loading={isLoading}
+            onPress={handleResetPassword}
+          >
+            Send Reset Link
+          </Button>
+        </Card>
         
         {/* Back to Login */}
-        <Button variant="secondary" size="sm" onPress={handleBackToLogin}>
-          <Typography variant="body" color="primary">
-            Back to Login
+        <Pressable onPress={() => navigation.navigate('Login')} style={styles.backLink}>
+          <Ionicons name="arrow-back" size={20} color={colors.primary} />
+          <Typography variant="label" color="primary" style={styles.backText}>
+            Back to Sign In
           </Typography>
-        </Button>
+        </Pressable>
       </View>
     </View>
   );
 };
 
-/**
- * Styles
- */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
     justifyContent: 'center',
-    padding: spacing.lg,
+    padding: spacing.xl,
   },
   content: {
     width: '100%',
   },
-  /** Logo styling */
-  logo: {
-    width: 120,                 // Fixed size for both states
-    height: 120,                // Square proportions
-    alignSelf: 'center',        // Center horizontally
-    marginBottom: spacing.lg,   // Space below logo
+  header: {
+    marginBottom: spacing.xxl,
   },
-  message: {
-    marginTop: spacing.base,
+  subtitle: {
+    marginTop: spacing.sm,
+  },
+  formCard: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    marginBottom: spacing.lg,
+  },
+  backLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+  },
+  backText: {
+    textDecorationLine: 'underline',
+  },
+  successIcon: {
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  successTitle: {
+    marginBottom: spacing.base,
+  },
+  successText: {
+    marginBottom: spacing.xs,
+  },
+  email: {
     marginBottom: spacing.xl,
   },
-  button: {
-    marginBottom: spacing.base,
+  backButton: {
+    marginTop: spacing.base,
   },
 });
 
 export default ForgotPasswordScreen;
-

@@ -1,99 +1,57 @@
 /**
- * Login Screen - User Authentication
+ * Login Screen - Modern Executive Authentication
  * 
- * This screen handles user login with email and password.
- * It includes form validation, error handling, and navigation to register/forgot password.
- * 
- * Features:
- * - Email and password input fields
- * - Form validation
- * - Loading state during authentication
- * - Error message display
- * - Navigation to register and forgot password screens
- * - Remember me functionality (future)
+ * Clean, minimal, executive login experience.
+ * No clutter, just beautiful form design with smooth interactions.
  * 
  * @module Screens/Auth/Login
  */
 
 import React, { useState } from 'react';
 import {
-  View,                       // Container view
-  StyleSheet,                 // Styling helper
-  KeyboardAvoidingView,       // Moves content above keyboard
-  Platform,                   // Detect platform
-  ScrollView,                 // Allows scrolling on smaller screens
-  Image,                      // Displays the Tailwind logo asset
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Pressable,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Typography, Button, Input } from '@components/design-system';
+import { Typography, Button, Input, Card } from '@components/design-system';
 import { useAuthStore } from '@store/authStore';
 import { AuthStackParamList } from '@types';
-import { colors, spacing } from '@constants/theme';
+import { colors, spacing, borderRadius } from '@constants/theme';
+import { Ionicons } from '@expo/vector-icons';
 
-/**
- * Login Screen Props
- * Type definition for navigation props
- */
+/** Login Screen Props */
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 
 /**
  * Login Screen Component
- * 
- * Renders the login form with email/password inputs.
- * Handles authentication via authStore and navigates to main app on success.
- * 
- * @param {LoginScreenProps} props - Navigation props
- * @returns {React.ReactElement} Login screen UI
+ * Modern, executive authentication experience
  */
 export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  // ========== Local State ==========
-  
-  /** Email input value */
+  // Form state
   const [email, setEmail] = useState('');
-  
-  /** Password input value */
   const [password, setPassword] = useState('');
-  
-  /** Email validation error */
   const [emailError, setEmailError] = useState('');
-  
-  /** Password validation error */
   const [passwordError, setPasswordError] = useState('');
   
-  // ========== Auth Store ==========
-  
-  /** Get auth actions and state from store */
+  // Auth store
   const { login, isLoading, error } = useAuthStore();
   
-  // ========== Validation ==========
-  
-  /**
-   * Validate email format
-   * Checks if email is valid using regex
-   * 
-   * @param {string} email - Email to validate
-   * @returns {boolean} Whether email is valid
-   */
+  /** Validate email */
   const validateEmail = (email: string): boolean => {
-    // Basic email regex pattern
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
   
-  /**
-   * Validate form inputs
-   * Checks email and password meet requirements
-   * 
-   * @returns {boolean} Whether form is valid
-   */
+  /** Validate form */
   const validateForm = (): boolean => {
     let isValid = true;
-    
-    // Clear previous errors
     setEmailError('');
     setPasswordError('');
     
-    // Validate email
     if (!email.trim()) {
       setEmailError('Email is required');
       isValid = false;
@@ -102,7 +60,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       isValid = false;
     }
     
-    // Validate password
     if (!password) {
       setPasswordError('Password is required');
       isValid = false;
@@ -114,46 +71,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     return isValid;
   };
   
-  // ========== Handlers ==========
-  
-  /**
-   * Handle login button press
-   * Validates form and attempts authentication
-   */
+  /** Handle login */
   const handleLogin = async () => {
-    // Validate form first
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
     
     try {
-      // Attempt login via auth store
       await login({ email: email.trim(), password });
-      
-      // Navigation is handled automatically by AppNavigator
-      // when isAuthenticated changes to true
-      
     } catch (error) {
-      // Error is handled by auth store
-      // Error message will be displayed from store.error
+      // Error handled by store
     }
   };
-  
-  /**
-   * Navigate to register screen
-   */
-  const handleRegister = () => {
-    navigation.navigate('Register');
-  };
-  
-  /**
-   * Navigate to forgot password screen
-   */
-  const handleForgotPassword = () => {
-    navigation.navigate('ForgotPassword');
-  };
-  
-  // ========== Render ==========
   
   return (
     <KeyboardAvoidingView
@@ -163,98 +90,82 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
+        {/* Modern Header */}
         <View style={styles.header}>
-          {/* Brand logo - replaces previous placeholder text-only header */}
-          <Image
-            source={require('../../../assets/transparant-bg-logo.png')} // Transparent logo asset
-            style={styles.logo}                                        // Scales logo consistently
-            resizeMode="contain"                                       // Preserve aspect ratio
-          />
-          <Typography variant="display" color="primary" align="center">
-            Tailwind
+          <Typography variant="display" color="text">
+            Welcome back
           </Typography>
-          <Typography variant="body" color="secondary" align="center" style={styles.subtitle}>
-            Track expenses with friends
+          <Typography variant="body" color="secondary" style={styles.subtitle}>
+            Sign in to your account
           </Typography>
         </View>
         
-        {/* Login Form */}
-        <View style={styles.form}>
-          {/* Email Input */}
+        {/* Login Form - Clean Card */}
+        <Card glass={false} elevation="flat" padding="lg" style={styles.formCard}>
+          {/* Email */}
           <Input
-            label="Email"
+            label="Email Address"
             type="email"
-            placeholder="your@email.com"
+            placeholder="you@example.com"
             value={email}
             onChangeText={setEmail}
             error={emailError}
             autoCapitalize="none"
             autoCorrect={false}
-            keyboardType="email-address"
-            textContentType="emailAddress"
           />
           
-          {/* Password Input */}
+          {/* Password */}
           <Input
             label="Password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter password"
             value={password}
             onChangeText={setPassword}
             error={passwordError}
             autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="password"
           />
           
-          {/* Store Error Message */}
-          {error && (
-            <Typography variant="bodySmall" color="error" style={styles.errorText}>
-              {error}
+          {/* Forgot Password */}
+          <Pressable onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgot}>
+            <Typography variant="bodySmall" color="primary">
+              Forgot password?
             </Typography>
+          </Pressable>
+          
+          {/* Error Alert */}
+          {error && (
+            <View style={styles.errorAlert}>
+              <Ionicons name="alert-circle" size={18} color={colors.error} />
+              <Typography variant="bodySmall" color="error" style={styles.errorText}>
+                {error}
+              </Typography>
+            </View>
           )}
           
-          {/* Forgot Password Link */}
-          <Button
-            variant="secondary"
-            size="sm"
-            onPress={handleForgotPassword}
-            style={styles.forgotButton}
-          >
-            <Typography variant="bodySmall" color="primary">
-              Forgot Password?
-            </Typography>
-          </Button>
-          
-          {/* Login Button */}
+          {/* Sign In Button */}
           <Button
             variant="primary"
             size="lg"
             fullWidth
             loading={isLoading}
             onPress={handleLogin}
-            style={styles.loginButton}
           >
-            Log In
+            Sign In
           </Button>
-          
-          {/* Register Link */}
-          <View style={styles.registerContainer}>
-            <Typography variant="body" color="secondary">
-              Don't have an account?{' '}
+        </Card>
+        
+        {/* Register Prompt */}
+        <View style={styles.registerPrompt}>
+          <Typography variant="body" color="secondary">
+            New to Tailwind?
+          </Typography>
+          <Pressable onPress={() => navigation.navigate('Register')}>
+            <Typography variant="label" color="primary" style={styles.registerLink}>
+              Create account
             </Typography>
-            <Button
-              variant="secondary"
-              size="sm"
-              onPress={handleRegister}
-            >
-              <Typography variant="body" color="primary">
-                Sign Up
-              </Typography>
-            </Button>
-          </View>
+          </Pressable>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -262,70 +173,78 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 };
 
 /**
- * Styles
+ * Styles - Modern Executive Design
  */
 const styles = StyleSheet.create({
-  /** Main container - fills screen */
+  /** Container */
   container: {
     flex: 1,
     backgroundColor: colors.background,
   },
   
-  /** Scroll view content */
+  /** Scroll content */
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: spacing.lg,
+    padding: spacing.xl,
+    paddingTop: spacing.xxxl,
   },
   
-  /** Header section */
+  /** Header */
   header: {
     marginBottom: spacing.xxl,
-    alignItems: 'center',
-  },
-  /** Logo image styling */
-  logo: {
-    width: 140,                 // Fixed width for consistency
-    height: 140,                // Matches width for square logo
-    marginBottom: spacing.base, // Space between logo and headline
   },
   
-  /** Subtitle text */
+  /** Subtitle */
   subtitle: {
     marginTop: spacing.sm,
   },
   
-  /** Form container */
-  form: {
-    width: '100%',
-  },
-  
-  /** Error message */
-  errorText: {
-    marginBottom: spacing.base,
-  },
-  
-  /** Forgot password button */
-  forgotButton: {
-    alignSelf: 'flex-end',
+  /** Form card */
+  formCard: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
     marginBottom: spacing.lg,
   },
   
-  /** Login button */
-  loginButton: {
-    marginBottom: spacing.base,
+  /** Forgot password */
+  forgot: {
+    alignSelf: 'flex-end',
+    marginTop: -spacing.sm,
+    marginBottom: spacing.lg,
   },
   
-  /** Register link container */
-  registerContainer: {
+  /** Error alert */
+  errorAlert: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: spacing.base,
+    backgroundColor: colors.error + '10',
+    padding: spacing.base,
+    borderRadius: borderRadius.md,
+    marginBottom: spacing.base,
+    borderWidth: 1,
+    borderColor: colors.error + '30',
+  },
+  
+  /** Error text */
+  errorText: {
+    marginLeft: spacing.sm,
+    flex: 1,
+  },
+  
+  /** Register prompt */
+  registerPrompt: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+  },
+  
+  /** Register link */
+  registerLink: {
+    textDecorationLine: 'underline',
   },
 });
 
-/**
- * Default export
- */
 export default LoginScreen;

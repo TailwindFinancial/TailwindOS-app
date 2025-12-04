@@ -14,6 +14,7 @@ Tailwind is a mobile expense splitting application that makes it easy for groups
 - **Receipt Scanning**: OCR-powered receipt scanning for quick expense entry
 - **Multi-Currency**: Real-time currency conversion for international groups
 - **Balance Tracking**: See who owes what at a glance
+- **Subscription Management**: Manage your subscriptions and get notified when they are due.
 
 ### Social & Viral Features
 - **Trip Wrapped**: Instagram-style recap of group expenses

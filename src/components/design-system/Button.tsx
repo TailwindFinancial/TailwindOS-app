@@ -277,15 +277,15 @@ export const Button: React.FC<ButtonProps> = ({
  * Common styles applied to all buttons
  */
 const styles = StyleSheet.create({
-  /** Base button container */
+  /** Base button container - integrated, not overlay style */
   base: {
     flexDirection: 'row',           // Horizontal layout for icon + text
     alignItems: 'center',           // Vertical centering
     justifyContent: 'center',       // Horizontal centering
-    borderRadius: borderRadius.md,  // Rounded corners (12px)
+    borderRadius: borderRadius.lg,  // Larger radius for modern look (16px)
     paddingHorizontal: spacing.lg,  // Horizontal padding (24px)
-    ...shadows.md,                  // Medium elevation shadow
     overflow: 'hidden',             // Clip content to rounded corners
+    // No shadows by default - integrated look, not floating
   },
   
   /** Full width button */
@@ -335,19 +335,31 @@ const styles = StyleSheet.create({
 /**
  * Variant Styles
  * Defines color schemes for different button types
+ * Updated for integrated, stitched-in look (not overlay/sticker style)
  */
 const variantStyles = StyleSheet.create({
-  /** Primary button - vibrant cyan background */
+  /** Primary button - integrated cyan with subtle depth */
   primary: {
     backgroundColor: colors.primary,      // Cyan background
-    borderWidth: 0,                       // No border
+    borderWidth: 0,                       // No border for clean look
+    // Subtle inner shadow effect for depth (stitched-in look)
+    shadowColor: colors.primaryDark,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 0,                         // No Android elevation (flat, integrated)
   },
   
-  /** Secondary button - dark background with border */
+  /** Secondary button - subtle, integrated into surface */
   secondary: {
-    backgroundColor: colors.secondary,    // Dark blue-gray background
-    borderWidth: 1,                       // 1px border
+    backgroundColor: 'transparent',       // Transparent to blend with surface
+    borderWidth: 1.5,                     // Slightly thicker border for definition
     borderColor: colors.border,           // Subtle border color
+    shadowColor: 'transparent',           // No shadow for flat integrated look
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,                         // Flat, no elevation
   },
 });
 
