@@ -14,7 +14,7 @@
  */
 
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import {
@@ -29,6 +29,8 @@ import {
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
+import { AppNavigator } from './src/navigation/AppNavigator';
+import { Typography } from './src/components/design-system';
 
 // Keep the splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
@@ -80,7 +82,9 @@ export default function App(): React.ReactElement | null {
   if (fontError) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error loading fonts: {fontError.message}</Text>
+        <Typography variant="body" color="error">
+          Error loading fonts: {fontError.message}
+        </Typography>
       </View>
     );
   }
@@ -92,11 +96,9 @@ export default function App(): React.ReactElement | null {
       {/* 'light' style shows white text on dark background */}
       <StatusBar style="light" />
       
-      {/* Temporary placeholder content - will be replaced with AppNavigator in Phase 3 */}
-      <View style={styles.content}>
-        <Text style={styles.title}>Tailwind</Text>
-        <Text style={styles.subtitle}>Phase 1 Complete ✓</Text>
-      </View>
+      {/* App Navigator - Main navigation structure */}
+      {/* Handles auth flow and main app navigation */}
+      <AppNavigator />
     </View>
   );
 }
@@ -114,28 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000', // Pure black background
   },
   
-  /** Content container - centers content vertically and horizontally */
-  content: {
-    flex: 1, // Fill parent container
-    justifyContent: 'center', // Center vertically
-    alignItems: 'center', // Center horizontally
-  },
-  
-  /** Title text style */
-  title: {
-    fontFamily: 'Fraunces_700Bold', // Use loaded Fraunces font
-    fontSize: 48, // Large, prominent size
-    color: '#5DD9D2', // Primary cyan color
-    marginBottom: 8, // Space below title
-  },
-  
-  /** Subtitle text style */
-  subtitle: {
-    fontFamily: 'Inter_400Regular', // Use loaded Inter font
-    fontSize: 18, // Readable size
-    color: '#FFFFFF', // White text
-  },
-  
   /** Error container style */
   errorContainer: {
     flex: 1, // Fill screen
@@ -143,14 +123,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center content
     backgroundColor: '#000000', // Black background
     padding: 20, // Inner padding
-  },
-  
-  /** Error text style */
-  errorText: {
-    fontFamily: 'Inter_400Regular', // Use Inter font
-    fontSize: 16, // Readable size
-    color: '#F44336', // Error red color
-    textAlign: 'center', // Center align text
   },
 });
 
