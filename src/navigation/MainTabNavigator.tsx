@@ -116,8 +116,20 @@ export const MainTabNavigator: React.FC = () => {
       <Tab.Navigator
         // Screen options applied to all tabs
         screenOptions={{
-          // Hide headers - each screen handles its own title inline
-          headerShown: false,
+          // Header styling - clean and modern
+          headerStyle: {
+            backgroundColor: colors.background,
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.border,
+          },
+          headerTintColor: colors.text,
+          headerTitleStyle: {
+            fontFamily: 'Fraunces_600SemiBold',
+            fontSize: 28,
+            color: colors.text,
+          },
           
           // Tab bar styling - executive and modern
           tabBarStyle: {
@@ -141,6 +153,7 @@ export const MainTabNavigator: React.FC = () => {
           tabBarIconStyle: {
             marginTop: 4,
           },
+          headerShown: true,
         }}
       >
         {/* Home Tab */}
@@ -149,6 +162,7 @@ export const MainTabNavigator: React.FC = () => {
           component={DashboardScreen}
           options={{
             title: 'Home',
+            headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'home' : 'home-outline'} 
@@ -208,6 +222,7 @@ export const MainTabNavigator: React.FC = () => {
           component={MoveMoneyScreen}
           options={{
             title: 'Settle',
+            headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'swap-horizontal' : 'swap-horizontal-outline'} 
@@ -224,6 +239,7 @@ export const MainTabNavigator: React.FC = () => {
           component={MoreScreen}
           options={{
             title: 'More',
+            headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'menu' : 'menu-outline'} 

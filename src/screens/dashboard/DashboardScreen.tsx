@@ -108,16 +108,23 @@ export const DashboardScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Top Safe Area Padding */}
-        <View style={styles.topPadding} />
+        {/* Top padding - safe area */}
+        <View style={styles.topSafeArea} />
         
-        {/* Title & Greeting */}
-        <View style={styles.headerSection}>
+        {/* Page Title */}
+        <View style={styles.pageHeader}>
           <Typography variant="h1" color="text">
             Home
           </Typography>
-          <Typography variant="body" color="secondary" style={styles.greeting}>
-            Good morning, {user?.name?.split(' ')[0]}
+        </View>
+        
+        {/* Greeting */}
+        <View style={styles.greeting}>
+          <Typography variant="body" color="secondary">
+            Good morning,
+          </Typography>
+          <Typography variant="h2" color="text" style={styles.userName}>
+            {user?.name?.split(' ')[0]}
           </Typography>
         </View>
         
@@ -369,15 +376,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  topPadding: {
-    height: 60,
+  topSafeArea: {
+    height: 50,
   },
-  headerSection: {
+  pageHeader: {
     paddingHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
+    paddingTop: spacing.base,
+    marginBottom: spacing.sm,
   },
   greeting: {
-    marginTop: spacing.xs,
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.base,
+  },
+  userName: {
+    marginTop: 2,
   },
   heroSection: {
     paddingHorizontal: spacing.lg,

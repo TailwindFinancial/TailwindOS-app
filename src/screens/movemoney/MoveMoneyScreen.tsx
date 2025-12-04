@@ -92,8 +92,8 @@ export const MoveMoneyScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Top Safe Area Padding */}
-        <View style={styles.topPadding} />
+        {/* Top safe area */}
+        <View style={styles.topSafeArea} />
         
         {/* Header */}
         <View style={styles.header}>
@@ -101,7 +101,7 @@ export const MoveMoneyScreen: React.FC = () => {
             Settle
           </Typography>
           <Typography variant="body" color="secondary" style={styles.subtitle}>
-            Payments & transfers
+            Manage payments and transfers
           </Typography>
         </View>
         
@@ -236,11 +236,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  topPadding: {
-    height: 60,
+  topSafeArea: {
+    height: 50,
   },
   header: {
     paddingHorizontal: spacing.lg,
+    paddingTop: spacing.base,
     paddingBottom: spacing.lg,
   },
   subtitle: {
