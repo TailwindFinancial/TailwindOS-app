@@ -371,117 +371,114 @@ export const PotDetailScreen: React.FC<PotDetailScreenProps> = ({ route, navigat
         {activeTab === 'analytics' && (
           <View style={styles.section}>
             {/* Category Breakdown */}
-            <View style={styles.analyticsCard}>
-              <Typography variant="h3" color="text" style={styles.analyticsTitle}>
+            {/* Category Breakdown - EXECUTIVE */}
+            <View style={styles.categoryCard}>
+              <Typography variant="h2" color="text" style={styles.categoryTitle}>
                 Spending by Category
               </Typography>
               
-              <View style={styles.categoryItem}>
-                <View style={styles.categoryLeft}>
-                  <View style={[styles.categoryDot, { backgroundColor: colors.primary }]} />
-                  <Typography variant="body" color="text">
-                    Food
-                  </Typography>
-                </View>
-                <View style={styles.categoryRight}>
-                  <View style={styles.categoryBar}>
-                    <View style={[styles.categoryFill, { width: '60%', backgroundColor: colors.primary }]} />
+              {[
+                { name: 'Food & Dining', amount: 1247, percent: 38, color: colors.primary },
+                { name: 'Accommodation', amount: 830, percent: 26, color: '#3498DB' },
+                { name: 'Transport', amount: 520, percent: 16, color: '#9B59B6' },
+                { name: 'Activities', amount: 420, percent: 13, color: '#E74C3C' },
+                { name: 'Other', amount: 230, percent: 7, color: colors.textTertiary },
+              ].map((category, index) => (
+                <View key={index} style={styles.categoryRow}>
+                  <View style={styles.categoryInfo}>
+                    <View style={[styles.categoryIndicator, { backgroundColor: category.color }]} />
+                    <Typography variant="body" color="text" style={styles.categoryName}>
+                      {category.name}
+                    </Typography>
                   </View>
-                  <Typography variant="label" color="text" style={styles.categoryAmount}>
-                    $1,247
-                  </Typography>
-                </View>
-              </View>
-              
-              <View style={styles.categoryItem}>
-                <View style={styles.categoryLeft}>
-                  <View style={[styles.categoryDot, { backgroundColor: '#9B59B6' }]} />
-                  <Typography variant="body" color="text">
-                    Transport
-                  </Typography>
-                </View>
-                <View style={styles.categoryRight}>
-                  <View style={styles.categoryBar}>
-                    <View style={[styles.categoryFill, { width: '25%', backgroundColor: '#9B59B6' }]} />
+                  <View style={styles.categoryStats}>
+                    <Typography variant="label" color="text">
+                      ${category.amount.toLocaleString()}
+                    </Typography>
+                    <Typography variant="caption" color="secondary" style={styles.categoryPercent}>
+                      {category.percent}%
+                    </Typography>
                   </View>
-                  <Typography variant="label" color="text" style={styles.categoryAmount}>
-                    $520
-                  </Typography>
-                </View>
-              </View>
-              
-              <View style={styles.categoryItem}>
-                <View style={styles.categoryLeft}>
-                  <View style={[styles.categoryDot, { backgroundColor: '#3498DB' }]} />
-                  <Typography variant="body" color="text">
-                    Accommodation
-                  </Typography>
-                </View>
-                <View style={styles.categoryRight}>
-                  <View style={styles.categoryBar}>
-                    <View style={[styles.categoryFill, { width: '40%', backgroundColor: '#3498DB' }]} />
-                  </View>
-                  <Typography variant="label" color="text" style={styles.categoryAmount}>
-                    $830
-                  </Typography>
-                </View>
-              </View>
-              
-              {/* Top Spender */}
-              <View style={styles.topSpenderCard}>
-                <View style={styles.topSpenderIcon}>
-                  <Ionicons name="trophy" size={24} color={colors.warning} />
-                </View>
-                <View style={styles.topSpenderContent}>
-                  <Typography variant="caption" color="tertiary">
-                    TOP SPENDER
-                  </Typography>
-                  <Typography variant="h3" color="text" style={styles.topSpenderName}>
-                    Sarah
-                  </Typography>
-                  <Typography variant="body" color="warning">
-                    $1,450 • 45% of total
-                  </Typography>
-                </View>
-              </View>
-            </View>
-            
-            {/* Daily Spending Trend */}
-            <View style={styles.analyticsCard}>
-              <Typography variant="h3" color="text" style={styles.analyticsTitle}>
-                Daily Average
-              </Typography>
-              <Typography variant="display" color="primary" align="center" style={styles.dailyAvg}>
-                $162
-              </Typography>
-              <Typography variant="caption" color="secondary" align="center">
-                per day over 20 days
-              </Typography>
-            </View>
-            
-            {/* Spending Trend Chart */}
-            <View style={styles.analyticsCard}>
-              <Typography variant="h3" color="text" style={styles.analyticsTitle}>
-                Weekly Trend
-              </Typography>
-              <View style={styles.trendChart}>
-                {[40, 65, 45, 80, 55, 70, 62].map((height, index) => (
-                  <View key={index} style={styles.barContainer}>
+                  <View style={styles.categoryBarContainer}>
                     <View 
                       style={[
-                        styles.bar, 
+                        styles.categoryBarFill, 
                         { 
-                          height: `${height}%`,
-                          backgroundColor: index === 6 ? colors.primary : colors.primary + '40'
+                          width: `${category.percent}%`,
+                          backgroundColor: category.color,
                         }
                       ]} 
                     />
-                    <Typography variant="caption" color="tertiary" style={styles.barLabel}>
-                      {['M', 'T', 'W', 'T', 'F', 'S', 'S'][index]}
+                  </View>
+                </View>
+              ))}
+              
+              {/* Top Spender */}
+              <View style={styles.topSpenderCard}>
+                <View style={styles.topSpenderHeader}>
+                  <View style={styles.topSpenderIconBg}>
+                    <Ionicons name="trophy" size={28} color={colors.warning} />
+                  </View>
+                  <View style={styles.topSpenderInfo}>
+                    <Typography variant="caption" color="tertiary">
+                      TOP CONTRIBUTOR
+                    </Typography>
+                    <Typography variant="h2" color="text" style={styles.topSpenderName}>
+                      Sarah
+                    </Typography>
+                    <Typography variant="label" color="warning">
+                      $1,450 • 45% of total
                     </Typography>
                   </View>
-                ))}
+                </View>
               </View>
+            </View>
+            
+            {/* Spending Trend Chart - EXECUTIVE */}
+            <View style={styles.trendCard}>
+              <Typography variant="h3" color="text" style={styles.analyticsTitle}>
+                Weekly Spending
+              </Typography>
+              <View style={styles.trendChart}>
+                {[420, 680, 540, 890, 650, 720, 810].map((amount, index) => {
+                  const maxAmount = 900;
+                  const heightPercent = (amount / maxAmount) * 100;
+                  return (
+                    <View key={index} style={styles.barContainer}>
+                      <Typography variant="caption" color="secondary" style={styles.barAmount}>
+                        ${amount}
+                      </Typography>
+                      <View 
+                        style={[
+                          styles.bar, 
+                          { 
+                            height: `${heightPercent}%`,
+                            backgroundColor: index === 6 ? colors.primary : colors.surface,
+                            borderWidth: index === 6 ? 0 : 1,
+                            borderColor: colors.border,
+                          }
+                        ]} 
+                      />
+                      <Typography variant="caption" color={index === 6 ? 'primary' : 'tertiary'} style={styles.barLabel}>
+                        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][index]}
+                      </Typography>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+            
+            {/* Daily Average */}
+            <View style={styles.avgCard}>
+              <Typography variant="caption" color="tertiary" align="center">
+                DAILY AVERAGE
+              </Typography>
+              <Typography variant="display" color="primary" align="center" style={styles.dailyAvgValue}>
+                $162
+              </Typography>
+              <Typography variant="caption" color="secondary" align="center">
+                over 20 days
+              </Typography>
             </View>
             
             {/* Payment Status */}
@@ -692,13 +689,14 @@ const styles = StyleSheet.create({
     gap: spacing.base,
   },
   memberAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: colors.surface,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   memberRight: {
     alignItems: 'flex-end',
@@ -788,31 +786,52 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 2,
   },
-  dailyAvg: {
-    marginVertical: spacing.sm,
+  trendCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: spacing.base,
   },
   trendChart: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    height: 120,
-    marginTop: spacing.base,
-    paddingHorizontal: spacing.sm,
+    height: 140,
+    marginTop: spacing.lg,
   },
   barContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginHorizontal: 2,
+    marginHorizontal: 3,
+  },
+  barAmount: {
+    fontSize: 10,
+    marginBottom: spacing.xs,
   },
   bar: {
     width: '100%',
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    minHeight: 20,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    minHeight: 24,
   },
   barLabel: {
-    marginTop: spacing.xs,
+    marginTop: spacing.sm,
+    fontSize: 10,
+  },
+  avgCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.xl,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    marginBottom: spacing.base,
+  },
+  dailyAvgValue: {
+    marginVertical: spacing.sm,
   },
   settlementRow: {
     flexDirection: 'row',

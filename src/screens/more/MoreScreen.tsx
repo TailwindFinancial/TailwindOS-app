@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   /** Page header */
   pageHeader: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.base,
+    paddingTop: spacing.lg,
     marginBottom: spacing.base,
   },
   

@@ -120,10 +120,10 @@ export const DashboardScreen: React.FC = () => {
         
         {/* Greeting */}
         <View style={styles.greeting}>
-          <Typography variant="body" color="secondary">
+          <Typography variant="h2" color="primary">
             Good morning,
           </Typography>
-          <Typography variant="h2" color="text" style={styles.userName}>
+          <Typography variant="h3" color="text" style={styles.userName}>
             {user?.name?.split(' ')[0]}
           </Typography>
         </View>
@@ -241,7 +241,7 @@ export const DashboardScreen: React.FC = () => {
               </Typography>
               <View style={styles.execTrend}>
                 <Ionicons name="add" size={14} color={colors.info} />
-                <Typography variant="caption" color="info" style={styles.execTrendText}>
+                <Typography variant="caption" style={{ color: colors.info, marginLeft: 4 }}>
                   2 this month
                 </Typography>
               </View>
@@ -259,7 +259,7 @@ export const DashboardScreen: React.FC = () => {
               </Typography>
               <View style={styles.execTrend}>
                 <Ionicons name="checkmark" size={14} color={colors.success} />
-                <Typography variant="caption" color="success" style={styles.execTrendText}>
+                <Typography variant="caption" style={{ color: colors.success, marginLeft: 4 }}>
                   All active
                 </Typography>
               </View>
@@ -382,14 +382,14 @@ const styles = StyleSheet.create({
   pageHeader: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.base,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.lg,
   },
   greeting: {
     paddingHorizontal: spacing.lg,
-    marginBottom: spacing.base,
+    marginBottom: spacing.lg,
   },
   userName: {
-    marginTop: 2,
+    marginTop: spacing.xs,
   },
   heroSection: {
     paddingHorizontal: spacing.lg,
